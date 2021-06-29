@@ -129,7 +129,8 @@ function getFlattenedTranslations(id, owner) {
   let ENV = (envConfig.i18n || {});
   let defaultLocale = ENV.defaultLocale;
   let defaultFallback = ENV.defaultFallback;
-  if (defaultFallback && defaultLocale && defaultLocale !== id) {
+  // check that parentId is null so that this is done only once, as first
+  if (parentId == null && defaultFallback && defaultLocale && defaultLocale !== id) {
     let defaultFactory = owner.factoryFor(`locale:${defaultLocale}/translations`);
     let defaultTranslations = defaultFactory && defaultFactory.class;
     assign(result, withFlattenedKeys(defaultTranslations || {}));
